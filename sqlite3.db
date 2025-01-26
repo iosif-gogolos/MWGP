@@ -1,0 +1,24 @@
+-- Tabelle für WGs erstellen
+CREATE TABLE IF NOT EXISTS wgs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  address TEXT NOT NULL
+);
+
+-- Tabelle für Zimmer erstellen
+CREATE TABLE IF NOT EXISTS rooms (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  wg_id INTEGER NOT NULL,
+  room_name TEXT NOT NULL,
+  FOREIGN KEY (wg_id) REFERENCES wgs (id)
+);
+
+-- Spalten zur Mitglieder-Tabelle hinzufügen
+ALTER TABLE members ADD COLUMN wg_id INTEGER;
+ALTER TABLE members ADD COLUMN room_id INTEGER;
+ALTER TABLE members ADD COLUMN email TEXT NOT NULL;
+ALTER TABLE members ADD COLUMN email_verified INTEGER DEFAULT 0; -- 0 = nicht bestätigt, 1 = bestätigt
+ALTER TABLE members ADD COLUMN approved_by_admin INTEGER DEFAULT 0; -- 0 = nicht freigegeben, 1 = freigegeben
+
+-- Optional: Testdaten für WGs und Zimmer hinzufügen
+INSERT INTO wgs (address) VALUES ('Klaraweg 1'), ('Klaraweg 3');
+INSERT INTO rooms (wg_id, room_name) VALUES (1, 'Zimmer 1'), (1, 'Zimmer 2'), (2, 'Zimmer 1'), (2, 'Zimmer 2');
