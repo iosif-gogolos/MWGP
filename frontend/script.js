@@ -3,6 +3,9 @@ const API_URL = '/.netlify/functions';
 async function populateDropdowns() {
   try {
     const wgsResponse = await fetch(`${API_URL}/wgs`);
+    if (!wgsResponse.ok) {
+      throw new Error(`HTTP error! status: ${wgsResponse.status}`);
+    }
     const wgs = await wgsResponse.json();
     const wgSelect = document.getElementById('wg');
 
@@ -18,6 +21,9 @@ async function populateDropdowns() {
       roomSelect.innerHTML = '';
 
       const roomsResponse = await fetch(`${API_URL}/rooms?wg_id=${wgSelect.value}`);
+      if (!roomsResponse.ok) {
+        throw new Error(`HTTP error! status: ${roomsResponse.status}`);
+      }
       const rooms = await roomsResponse.json();
 
       rooms.forEach(room => {
