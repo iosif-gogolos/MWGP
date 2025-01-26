@@ -32,29 +32,34 @@ async function populateDropdowns() {
   }
 }
 
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData);
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
 
-  try {
-    const response = await fetch(`${API_URL}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      try {
+        const response = await fetch(`${API_URL}/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('Registrierung erfolgreich! Bitte bestätige deine E-Mail.');
+        } else {
+          alert(`Fehler: ${result.error}`);
+        }
+      } catch (error) {
+        console.error('Fehler bei der Registrierung:', error);
+      }
     });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      alert('Registrierung erfolgreich! Bitte bestätige deine E-Mail.');
-    } else {
-      alert(`Fehler: ${result.error}`);
-    }
-  } catch (error) {
-    console.error('Fehler bei der Registrierung:', error);
   }
-});
 
-document.addEventListener('DOMContentLoaded', populateDropdowns);
+  populateDropdowns();
+});
