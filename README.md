@@ -18,10 +18,10 @@ Ob Ärzte, Informatiker oder Studierende – MWGP spricht alle an, die Wert auf 
 1. **Klonen Sie das Repository:**  
    ```bash  
    git clone https://github.com/DeinBenutzername/Mein-WG-Putzplan.git  
-2. **Installieren Sie die Abhängigkeiten: **
+2. **Installieren Sie die Abhängigkeiten:**
    ```bash
    npm install  
-3. **Starten Sie die app: **
+3. **Starten Sie die app:**
    ```bash
    npm start  
 
