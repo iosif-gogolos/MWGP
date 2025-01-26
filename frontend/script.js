@@ -1,10 +1,7 @@
-// Backend-URL (anpassen, wenn du Netlify oder andere Dienste nutzt)
-const API_URL = 'http://localhost:3005';
+const API_URL = '/.netlify/functions';
 
-// Dropdowns für WG und Zimmer befüllen
 async function populateDropdowns() {
   try {
-    // WGs abrufen
     const wgsResponse = await fetch(`${API_URL}/wgs`);
     const wgs = await wgsResponse.json();
     const wgSelect = document.getElementById('wg');
@@ -16,10 +13,9 @@ async function populateDropdowns() {
       wgSelect.appendChild(option);
     });
 
-    // Wenn eine WG ausgewählt wird, Zimmer abrufen
     wgSelect.addEventListener('change', async () => {
       const roomSelect = document.getElementById('room');
-      roomSelect.innerHTML = ''; // Vorherige Optionen entfernen
+      roomSelect.innerHTML = '';
 
       const roomsResponse = await fetch(`${API_URL}/rooms?wg_id=${wgSelect.value}`);
       const rooms = await roomsResponse.json();
@@ -36,8 +32,7 @@ async function populateDropdowns() {
   }
 }
 
-// Registrierungsformular abschicken
-document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
@@ -62,5 +57,4 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
   }
 });
 
-// Dropdowns beim Laden der Seite befüllen
 document.addEventListener('DOMContentLoaded', populateDropdowns);
